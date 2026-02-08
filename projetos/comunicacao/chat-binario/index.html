@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Chat Matrix Binário - Comunicação Segura com Decodificação em Tempo Real">
+    <title>Alcateia Digital | Lobinho.IA</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Fonte retro pixelada ou terminal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Matrix Background Canvas -->
+    <canvas id="matrix-bg"></canvas>
+
+    <div class="crt-overlay"></div>
+    <div class="scanlines"></div>
+    <div class="vignette"></div>
+
+    <main id="app">
+        <!-- Tela de Login -->
+        <section id="login-screen" class="screen active">
+            <div class="terminal-window">
+                <div class="terminal-header">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                    <span class="title">alcateia_auth.exe</span>
+                </div>
+                <div class="terminal-content">
+                    <div class="header-group">
+                        <h1 class="glitch-title-small" data-text="ALCATEIA">ALCATEIA</h1>
+                        <p class="sub-headline">ACESSO AO UPLINK / AUTENTICAÇÃO</p>
+                    </div>
+
+                    <div class="login-form">
+                        <!-- Toggle Login / Cadastrar -->
+                        <div class="auth-mode-toggle">
+                            <button class="auth-tab active" data-mode="login">ENTRAR</button>
+                            <button class="auth-tab" data-mode="register">CADASTRAR</button>
+                        </div>
+
+                        <div class="input-group">
+                            <label>USUÁRIO</label>
+                            <div class="input-line">
+                                <span class="prefix">></span>
+                                <input type="text" id="username" placeholder="Digite seu usuário..."
+                                    autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>SENHA</label>
+                            <div class="input-line">
+                                <span class="prefix">></span>
+                                <input type="password" id="password" placeholder="Digite sua senha..."
+                                    autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div class="input-group hidden" id="confirm-group">
+                            <label>CONFIRMAR SENHA</label>
+                            <div class="input-line">
+                                <span class="prefix">></span>
+                                <input type="password" id="confirm-password" placeholder="Confirme sua senha..."
+                                    autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div id="auth-error" class="auth-error"></div>
+
+                        <div class="control-group">
+                            <label>SELECIONE A FREQUÊNCIA</label>
+                            <div class="segmented-control">
+                                <button class="seg-btn active" data-theme="green">
+                                    <span class="color-dot green"></span>NEO
+                                </button>
+                                <button class="seg-btn" data-theme="red">
+                                    <span class="color-dot red"></span>TRINITY
+                                </button>
+                                <button class="seg-btn" data-theme="gold">
+                                    <span class="color-dot gold"></span>MORPHEUS
+                                </button>
+                            </div>
+                        </div>
+
+                        <button id="btn-login" class="cyber-btn-modern">
+                            <span class="btn-text">INICIAR UPLINK</span>
+                            <span class="btn-loader hidden"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="terminal-footer">
+                    <span>STATUS: <span class="status-indicator">OFFLINE</span></span>
+                    <span class="version">v.2.0.4 beta</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interface do Chat -->
+        <section id="chat-screen" class="screen hidden">
+            <div class="chat-wrapper">
+                <!-- Sidebar Lateral -->
+                <aside class="sidebar">
+                    <div class="hud-panel">
+                        <h3>STATUS DO SISTEMA</h3>
+                        <div class="stat-row">
+                            <span>CRIPTOGRAFIA</span>
+                            <span class="stat-value text-highlight">AES-256</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>CONEXÃO</span>
+                            <span class="stat-value blink">ESTÁVEL</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>USUÁRIOS</span>
+                            <span class="stat-value" id="user-count">2</span>
+                        </div>
+                    </div>
+
+                    <div class="hud-panel connection-panel">
+                        <h3>ESTABELECER VÍNCULO</h3>
+                        <div class="connect-box">
+                            <input type="text" id="target-username" placeholder="Nome do Alvo..." autocomplete="off">
+                            <button id="btn-add-target" title="Conectar">+</button>
+                        </div>
+                    </div>
+
+                    <div class="hud-panel active-channels">
+                        <h3>CANAIS_ATIVOS</h3>
+                        <div id="active-users-list">
+                            <!-- Lista de usuários -->
+                            <div class="user-item active" data-id="broadcast" onclick="selectChannel('broadcast')">
+                                <span class="user-avt">#</span>
+                                <span class="user-name">GLOBAL</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hud-panel tools">
+                        <h3>FERRAMENTAS</h3>
+                        <button class="tool-btn" id="btn-panic" title="Limpar tela imediatamente">
+                            ⚠️ PÂNICO
+                        </button>
+                        <button class="tool-btn" id="btn-export" title="Salvar log da conversa">
+                            💾 EXPORTAR LOG
+                        </button>
+                    </div>
+
+                    <div class="hud-panel theme-switcher-mini">
+                        <h3>TEMA</h3>
+                        <div class="mini-themes">
+                            <div class="mini-theme green" data-theme="green"></div>
+                            <div class="mini-theme red" data-theme="red"></div>
+                            <div class="mini-theme gold" data-theme="gold"></div>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Área Principal -->
+                <div class="main-chat">
+                    <header class="chat-header-bar">
+                        <div class="user-profile">
+                            <div class="avatar-frame">
+                                <span class="avatar-char" id="user-avatar-char">U</span>
+                            </div>
+                            <div class="user-details">
+                                <span class="username" id="current-user-display">USUÁRIO</span>
+                                <span class="status">OPERADOR</span>
+                            </div>
+                        </div>
+                        <button id="btn-logout" class="logout-btn">[ X ]</button>
+                    </header>
+
+                    <div id="messages-area" class="messages-area">
+                        <div class="system-msg">
+                            <span>CONEXÃO ESTABELECIDA EM <span id="clock">00:00:00</span></span>
+                        </div>
+                        <!-- Mensagens aqui -->
+                    </div>
+
+                    <div class="input-area">
+                        <div class="typing-indicator" id="typing-indicator" style="opacity: 0">
+                            > DADOS ENTRANDO...
+                        </div>
+                        <form id="chat-form">
+                            <div class="input-wrapper">
+                                <span class="input-prompt">></span>
+                                <input type="text" id="message-input" placeholder="Digite comando ou mensagem..."
+                                    autocomplete="off">
+                                <button type="submit" class="send-btn">ENVIAR</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+
+    <!-- Firebase Config (EDITE ESTE ARQUIVO COM SUAS CREDENCIAIS) -->
+    <script src="firebase-config.js"></script>
+
+    <!-- App -->
+    <script src="script.js"></script>
+</body>
+
+</html>
