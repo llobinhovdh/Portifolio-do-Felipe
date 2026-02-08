@@ -6,7 +6,5 @@ server {
     root /usr/share/nginx/html;
     index index.html;
 
-    location / {
-        try_files $$uri $$uri/ /index.html;
-    }
+ # Eu deixo o Nginx servir os arquivos estaticos diretamente.
 }
