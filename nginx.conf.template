@@ -4,7 +4,16 @@ server {
     server_name _;
 
     root /usr/share/nginx/html;
-    index index.html;
+    index inicio.html index.html;
 
- # Eu deixo o Nginx servir os arquivos estaticos diretamente.
+    # Eu deixo o Nginx servir os arquivos estaticos diretamente.
+
+    location = /favicon.ico {
+        log_not_found off;
+        access_log off;
+    }
+
+    location / {
+        try_files $uri $uri/ /inicio.html =404;
+    }
 }
