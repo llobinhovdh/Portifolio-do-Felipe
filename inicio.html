@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Lobinho - Desenvolvedor Full Stack. Portfólio com projetos em JavaScript, Python, React e Node.js. Disponível para projetos freelance.">
+    <meta name="keywords"
+        content="desenvolvedor, full stack, programador, javascript, python, react, nodejs, portfolio">
+    <meta name="author" content="André Felipe (Lobinho)">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Lobinho | Full Stack Developer">
+    <meta property="og:description"
+        content="Desenvolvedor Full Stack focado em criar aplicações limpas, eficientes e escaláveis.">
+    <meta property="og:type" content="website">
+    <title>Lobinho | Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="estilos/principal.css">
+</head>
+
+<body>
+    <!-- Eu exibo a tela de boot enquanto a interface carrega -->
+    <div id="boot-screen">
+        <div class="boot-container">
+            <div class="boot-logo">
+                <div class="boot-logo-text">LOBINHO</div>
+                <div class="boot-logo-sub">PORTFÓLIO DE DESENVOLVEDOR</div>
+            </div>
+            <div class="boot-lines" id="boot-lines"></div>
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <div class="boot-status" id="boot-status">Initializing...</div>
+        </div>
+    </div>
+
+    <!-- Eu renderizo o fundo com efeito matrix usando canvas -->
+    <canvas id="matrix"></canvas>
+
+    <!-- Eu inicio o aplicativo principal -->
+    <div id="app">
+        <!-- Eu organizo a navegação principal do site -->
+        <nav class="nav" role="navigation" aria-label="Menu principal">
+            <div class="nav-inner">
+                <div class="nav-brand">
+                    <span class="nav-name">lobinho.dev</span>
+                </div>
+                <div class="nav-links">
+                    <a href="#home" class="nav-link active" aria-label="Ir para início">Início</a>
+                    <a href="#skills" class="nav-link" aria-label="Ver habilidades">Habilidades</a>
+                    <a href="#projects" class="nav-link" aria-label="Ver projetos">Projetos</a>
+                    <a href="#about" class="nav-link" aria-label="Sobre mim">Sobre</a>
+                    <a href="#contact" class="nav-link" aria-label="Entrar em contato">Contato</a>
+                </div>
+                <div class="nav-status" aria-live="polite">
+                    <span class="status-dot" aria-hidden="true"></span>
+                    <span>Disponível para projetos</span>
+                </div>
+                <button class="nav-mobile-toggle" aria-label="Abrir menu" aria-expanded="false"
+                    aria-controls="mobile-menu">
+                    <span class="hamburger" aria-hidden="true"></span>
+                </button>
+            </div>
+            <!-- Eu mostro o menu móvel quando ele é acionado -->
+            <div class="nav-mobile-menu" id="mobile-menu" role="menu">
+                <a href="#home" class="nav-link active" role="menuitem" aria-label="Ir para início">Início</a>
+                <a href="#skills" class="nav-link" role="menuitem" aria-label="Ver habilidades">Habilidades</a>
+                <a href="#projects" class="nav-link" role="menuitem" aria-label="Ver projetos">Projetos</a>
+                <a href="#about" class="nav-link" role="menuitem" aria-label="Sobre mim">Sobre</a>
+                <a href="#contact" class="nav-link" role="menuitem" aria-label="Entrar em contato">Contato</a>
+            </div>
+        </nav>
+
+        <!-- Eu concentro o conteúdo principal da página -->
+        <main class="main">
+            <!-- Eu apresento a seção hero com o destaque inicial -->
+            <section id="home" class="hero fade-in">
+                <div class="hero-badge">
+                    <span class="hero-badge-dot"></span>
+                    <span>Desenvolvedor Full Stack</span>
+                </div>
+                <h1 class="hero-title">
+                    Criando experiências<br>
+                    <span class="hero-title-highlight">digitais</span> que importam
+                </h1>
+                <p class="hero-desc">
+                    Desenvolvedor focado em criar aplicações limpas, eficientes e escaláveis.
+                    Transformando ideias em realidade através do código.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn btn-primary" aria-label="Entrar em contato comigo">
+                        Entre em contato →
+                    </a>
+                    <a href="https://github.com/llobinhovdh" target="_blank" rel="noopener noreferrer"
+                        class="btn btn-secondary" aria-label="Ver meu GitHub (abre em nova aba)">
+                        Ver GitHub
+                    </a>
+                </div>
+            </section>
+
+            <!-- Eu simulo um terminal para apresentar meu perfil -->
+            <section class="fade-in">
+                <div class="terminal-card">
+                    <div class="terminal-header">
+                        <span class="terminal-dot red"></span>
+                        <span class="terminal-dot yellow"></span>
+                        <span class="terminal-dot green"></span>
+                        <span class="terminal-title">profile.sh</span>
+                    </div>
+                    <div class="terminal-body" id="terminal-body">
+                        <div class="terminal-line">
+                            <span class="terminal-prompt">$</span>
+                            <span class="terminal-cmd">cat profile.json</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Eu listo minhas habilidades técnicas -->
+            <section id="skills" class="section fade-in">
+                <div class="section-header">
+                    <div class="section-label">Especialidades</div>
+                    <h2 class="section-title">Habilidades Técnicas</h2>
+                </div>
+                <div class="skills-grid">
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="3" y1="9" x2="21" y2="9"></line>
+                                <line x1="9" y1="21" x2="9" y2="9"></line>
+                            </svg>
+                        </div>
+                        <h3 class="skill-title">Frontend</h3>
+                        <div class="skill-list">
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">TypeScript</span>
+                            <span class="skill-tag">React</span>
+                            <span class="skill-tag">Vue</span>
+                            <span class="skill-tag">HTML/CSS</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                                <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                                <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                                <line x1="6" y1="18" x2="6.01" y2="18"></line>
+                            </svg>
+                        </div>
+                        <h3 class="skill-title">Backend</h3>
+                        <div class="skill-list">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">Node.js</span>
+                            <span class="skill-tag">Django</span>
+                            <span class="skill-tag">Flask</span>
+                            <span class="skill-tag">Express</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                            </svg>
+                        </div>
+                        <h3 class="skill-title">Database</h3>
+                        <div class="skill-list">
+                            <span class="skill-tag">PostgreSQL</span>
+                            <span class="skill-tag">MongoDB</span>
+                            <span class="skill-tag">Redis</span>
+                            <span class="skill-tag">MySQL</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path
+                                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                                </path>
+                                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                            </svg>
+                        </div>
+                        <h3 class="skill-title">DevOps</h3>
+                        <div class="skill-list">
+                            <span class="skill-tag">Docker</span>
+                            <span class="skill-tag">AWS</span>
+                            <span class="skill-tag">Linux</span>
+                            <span class="skill-tag">CI/CD</span>
+                            <span class="skill-tag">Git</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">1</div>
+                        <div class="stat-label">Ano de Experiência</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">3</div>
+                        <div class="stat-label">Projetos Concluídos</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">15+</div>
+                        <div class="stat-label">Tecnologias</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">
+                            <svg class="infinity-icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 1 0 0-8c-2 0-4 1.33-6 4Z" />
+                            </svg>
+                        </div>
+                        <div class="stat-label">Xícaras de Café</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Eu introduzo a seção sobre mim -->
+            <!-- Eu apresento a seção de projetos -->
+            <section id="projects" class="section fade-in">
+                <div class="section-header">
+                    <div class="section-label">Projetos</div>
+                    <h2 class="section-title">Projetos Recentes</h2>
+                </div>
+                <div class="skills-grid">
+                    <a class="skill-card project-card" href="projetos/divertido/universo/galaxia-do-amor.html"
+                        target="_blank" rel="noopener noreferrer" aria-label="Abrir projeto Galaxia do Amor">
+                        <div class="skill-icon" style="background: rgba(34, 197, 94, 0.1); color: var(--green);">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                                <polyline points="2 17 12 22 22 17"></polyline>
+                                <polyline points="2 12 12 17 22 12"></polyline>
+                            </svg>
+                        </div>
+                        <h3 class="skill-title">Galaxia do Amor</h3>
+                        <p style="color: var(--text-dim); font-size: 13px; margin-bottom: 12px;">
+                            Experiencia 3D com Three.js, coracoes e trilha musical integrada.
+                        </p>
+                        <div class="skill-list">
+                            <span class="skill-tag">HTML</span>
+                            <span class="skill-tag">Three.js</span>
+                            <span class="skill-tag">WebGL</span>
+                            <span class="skill-tag">Trilha: Quero Ser Seu</span>
+                        </div>
+                    </a>
+                    <a class="skill-card project-card" href="projetos/assistente-educacional/inicio.html"
+                        target="_blank" rel="noopener noreferrer" aria-label="Abrir Assistente Educacional">
+                        <div class="skill-icon" style="background: rgba(34, 197, 94, 0.1); color: var(--green);">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="skill-title">Assistente Educacional</h3>
+                        <p style="color: var(--text-dim); font-size: 13px; margin-bottom: 12px;">
+                            Plataforma de estudos com IA, flashcards, quiz, pomodoro e anotações.
+                        </p>
+                        <div class="skill-list">
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">Groq AI</span>
+                            <span class="skill-tag">LocalStorage</span>
+                        </div>
+                    </a>
+</div>
+            </section>
+
+            <section id="about" class="hero fade-in">
+                <div class="hero-badge">
+                    <span class="hero-badge-dot"></span>
+                    <span>Sobre mim</span>
+                </div>
+                <h2 class="hero-title">
+                    Um pouco <br>
+                    <span class="hero-title-highlight">sobre mim</span>
+                </h2>
+                <p class="hero-desc">
+                    Sou o André Felipe, desenvolvedor full stack do Brasil. Transformo ideias em aplicações limpas,
+                    eficientes e escaláveis, do planejamento ao deploy.
+                </p>
+                <p class="hero-desc">
+                    Meu foco é aprender construindo: prototipar, testar e evoluir projetos reais. Quando não estou
+                    codando, exploro novas ferramentas e contribuo com a comunidade open source.
+                </p>
+            </section>
+
+            <!-- Eu disponibilizo a seção de contato -->
+            <section id="contact" class="section fade-in">
+                <div class="section-header">
+                    <div class="section-label">Contato</div>
+                    <h2 class="section-title">Vamos conversar</h2>
+                </div>
+                <div class="contact-grid">
+                    <a href="https://github.com/llobinhovdh" target="_blank" rel="noopener noreferrer"
+                        class="contact-card" aria-label="Visitar meu GitHub">
+                        <div class="contact-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" aria-hidden="true">
+                                <path
+                                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+                                </path>
+                            </svg>
+                        </div>
+                        <div class="contact-info">
+                            <div class="contact-value">GitHub</div>
+                            <div class="contact-label">Ver projetos e código</div>
+                        </div>
+                        <span class="contact-arrow" aria-hidden="true">→</span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/andré-felipe-andré-felipe-980ba5380" target="_blank"
+                        rel="noopener noreferrer" class="contact-card" aria-label="Conectar no LinkedIn">
+                        <div class="contact-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" aria-hidden="true">
+                                <path
+                                    d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
+                                </path>
+                                <rect x="2" y="9" width="4" height="12"></rect>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </div>
+                        <div class="contact-info">
+                            <div class="contact-value">LinkedIn</div>
+                            <div class="contact-label">Conecte-se comigo</div>
+                        </div>
+                        <span class="contact-arrow" aria-hidden="true">→</span>
+                    </a>
+                    <a href="mailto:lobinho@mail.dev" class="contact-card" aria-label="Enviar email">
+                        <div class="contact-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" aria-hidden="true">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                </path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                        </div>
+                        <div class="contact-info">
+                            <div class="contact-value">Email</div>
+                            <div class="contact-label">Entre em contato</div>
+                        </div>
+                        <span class="contact-arrow" aria-hidden="true">→</span>
+                    </a>
+                    <a href="https://lobinho.dev" target="_blank" rel="noopener noreferrer" class="contact-card"
+                        aria-label="Visitar meu website">
+                        <div class="contact-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" aria-hidden="true">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="2" y1="12" x2="22" y2="12"></line>
+                                <path
+                                    d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                                </path>
+                            </svg>
+                        </div>
+                        <div class="contact-info">
+                            <div class="contact-value">Website</div>
+                            <div class="contact-label">Visite meu portfólio</div>
+                        </div>
+                        <span class="contact-arrow" aria-hidden="true">→</span>
+                    </a>
+                    <a href="https://www.instagram.com/llobinho.vdh/" target="_blank" rel="noopener noreferrer"
+                        class="contact-card" aria-label="Seguir no Instagram">
+                        <div class="contact-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" aria-hidden="true">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                        </div>
+                        <div class="contact-info">
+                            <div class="contact-value">Instagram</div>
+                            <div class="contact-label">Siga-me nas redes</div>
+                        </div>
+                        <span class="contact-arrow" aria-hidden="true">→</span>
+                    </a>
+                </div>
+            </section>
+        </main>
+
+        <!-- Eu finalizo a página com o rodapé -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-top footer-creative">
+                    <div class="footer-brand footer-statement">
+                        <span class="footer-label">Encerrando</span>
+                        <h3 class="footer-headline">Fim do scroll. Come&ccedil;o do projeto.</h3>
+                        <p class="footer-tagline">
+                            Transformando <span class="highlight">c&oacute;digo</span> em experi&ecirc;ncias digitais.
+                        </p>
+
+                        <div class="footer-status" aria-label="Dispon&iacute;vel para projetos">
+                            <span class="footer-status-dot" aria-hidden="true"></span>
+                            Dispon&iacute;vel para projetos
+                        </div>
+                    </div>
+
+                    <div class="footer-actions">
+                        <a href="#contact" class="footer-action-btn" aria-label="Ir para contato">
+                            Vamos conversar &rarr;
+                        </a>
+                        <span class="footer-action-note">Resposta em at&eacute; 24h</span>
+                    </div>
+                </div>
+
+                <div class="footer-divider"></div>
+
+                <div class="footer-bottom">
+                    <p class="footer-text">
+                        &copy; <span class="footer-year" id="copyright-year">2025</span> Lobinho. Todos os direitos
+                        reservados.
+                    </p>
+                    <div class="footer-social">
+                        <a href="https://github.com/llobinhovdh" target="_blank" rel="noopener noreferrer"
+                            class="footer-social-link" aria-label="GitHub">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path
+                                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+                                </path>
+                            </svg>
+                        </a>
+                        <a href="https://www.linkedin.com/in/andr%C3%A9-felipe-andr%C3%A9-felipe-980ba5380"
+                            target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="LinkedIn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path
+                                    d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
+                                </path>
+                                <rect x="2" y="9" width="4" height="12"></rect>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                        <a href="mailto:lobinho@mail.dev" class="footer-social-link" aria-label="Email">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                </path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                        </a>
+                        <a href="https://lobinho.dev" target="_blank" rel="noopener noreferrer"
+                            class="footer-social-link" aria-label="Website">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="2" y1="12" x2="22" y2="12"></line>
+                                <path
+                                    d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                                </path>
+                            </svg>
+                        </a>
+                        <a href="https://www.instagram.com/llobinho.vdh/" target="_blank" rel="noopener noreferrer"
+                            class="footer-social-link" aria-label="Instagram">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-signoff">
+                    <span class="footer-mono">// pronto para o pr&oacute;ximo projeto</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="scripts/principal.js" defer></script>
+</body>
+
+</html>
